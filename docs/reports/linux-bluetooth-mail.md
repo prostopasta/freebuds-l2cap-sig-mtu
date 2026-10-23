@@ -64,6 +64,8 @@ on this system; full traces, analysis and a reproduction setup are at
 
   https://github.com/prostopasta/freebuds-l2cap-sig-mtu
 
+Also filed against the Ubuntu kernel: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2172088
+
 Environment: Ubuntu 24.04, 6.8.0-147-generic, BlueZ 5.72, Intel AX201
 (ibt-17-16-1, FW 155-35.23). A JBL TUNE770NC on the same host is unaffected.
 

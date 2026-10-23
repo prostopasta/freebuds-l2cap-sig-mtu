@@ -203,6 +203,17 @@ takes.
 configuration, so these are useful **only** on those releases — on anything else, build
 your own with one of the methods above.
 
+## Where this is reported
+
+* Ubuntu kernel bug: [LP#2172088](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2172088) — the actionable one for Ubuntu users.
+* BlueZ issue [#2526](https://github.com/bluez/bluez/issues/2526#issuecomment-6374523810)
+  — the analysis above, posted on the existing report.
+* `btmon` aborting on this system turned out to be a separate bug, filed as
+  [bluez/bluez#2704](https://github.com/bluez/bluez/issues/2704).
+* A fix can only come from the Bluetooth maintainers; a mail draft for
+  `linux-bluetooth@vger.kernel.org` is in
+  [docs/reports/linux-bluetooth-mail.md](docs/reports/linux-bluetooth-mail.md).
+
 ## Related
 
 * BlueZ issue [#2526](https://github.com/bluez/bluez/issues/2526) — same device, same
