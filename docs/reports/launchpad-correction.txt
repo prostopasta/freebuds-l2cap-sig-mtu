@@ -1,0 +1,35 @@
+Correcting two things in the description.
+
+First, the commit is upstream, not an Ubuntu patch. It is
+dd214733544427587a95f66dbf3adff072568990, authored 2026-05-21 by Michael
+Bommarito and committed by Luiz Augusto von Dentz on 2026-06-03, carrying
+Cc: stable@vger.kernel.org. My remark that vanilla 6.8, 6.12 and 6.15 do not
+contain the check was about those release tags predating it, and it reads as
+if this were specific to Ubuntu. It is not - every tree following stable
+gets it. What is still true for Ubuntu is the practical impact: the stable
+backport reached noble and broke working hardware on a routine update.
+
+Second, my "suggested handling" was wrong and should not be acted on as
+written. I proposed answering Echo Requests regardless of size. That is
+exactly the behaviour the commit removed, and it exists for a reason -
+quoting the commit message:
+
+    a Bluetooth BR/EDR peer within radio range, before pairing, can force
+    168 ECHO_RSP frames from one 681-byte fixed-channel signaling packet
+    containing packed ECHO_REQ commands
+
+So the workaround of raising L2CAP_SIG_MTU, which is what I am running
+locally, reopens that amplification vector. Anyone applying it should know
+that.
+
+A fix has to keep the attack closed. Two differences between the attack and
+this device look usable: the amplification happens before pairing, while the
+FreeBuds frame arrives after Encryption Change from a bonded peer; and the
+attack packs 168 commands into one packet, while the earbuds send exactly
+one. Bounding the number of commands dispatched per signalling packet, or
+relaxing the size limit only on encrypted links, would cover both.
+
+I have taken that argument to linux-bluetooth@vger.kernel.org, where a fix
+would have to land. For Ubuntu the useful outcome here is probably picking
+up whatever upstream settles on, and in the meantime a release-note mention,
+since affected users have no way to connect the symptom to the kernel.

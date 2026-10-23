@@ -1,5 +1,6 @@
 Target: comment on https://github.com/bluez/bluez/issues/2526
 Posted as: https://github.com/bluez/bluez/issues/2526#issuecomment-6374523810
+Correction: https://github.com/bluez/bluez/issues/2526#issuecomment-6375262227
 
 ---
 

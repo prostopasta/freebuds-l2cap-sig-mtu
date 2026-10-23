@@ -1,5 +1,6 @@
 Target: Launchpad bug against the `linux` source package (Ubuntu 24.04 / noble).
 Filed as: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2172088
+Correction posted as a comment there: see launchpad-correction.txt
 
 File it with `ubuntu-bug linux` so the kernel, hardware and BlueZ versions are attached
 automatically, then replace the description with the text below.
