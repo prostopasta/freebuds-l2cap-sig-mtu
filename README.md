@@ -99,17 +99,27 @@ and `l2cap_sig_channel()` in `net/bluetooth/l2cap_core.c` gained:
 	}
 ```
 
-Commit: *"Bluetooth: L2CAP: reject BR/EDR signaling packets over MTUsig"*, Michael
-Bommarito, author date 2026-09-03.
+Commit [`dd214733544`](https://github.com/torvalds/linux/commit/dd214733544427587a95f66dbf3adff072568990)
+— *"Bluetooth: L2CAP: reject BR/EDR signaling packets over MTUsig"*, Michael Bommarito,
+authored 2026-05-21, committed by Luiz Augusto von Dentz 2026-06-03, carrying
+`Cc: stable@vger.kernel.org`.
 
-### Affected / unaffected
+**This is upstream, not a distribution patch.** The stable tag means it reaches every
+distribution that follows stable, Ubuntu included. Release tags that predate it — v6.8,
+v6.12, v6.15 — do not contain the check, so grepping those comes up empty; that says when
+it landed, not who carries it.
 
-| Kernel | Check present | FreeBuds 3 |
-|---|---|---|
-| vanilla 6.8, 6.12, 6.15 | no | work |
-| Ubuntu noble 6.8.0-146, 6.8.0-147 | yes | broken |
+### Why the check exists
 
-Verified by grepping `L2CAP_REJ_MTU_EXCEEDED` / `rej_mtu` in the respective trees.
+The commit is not gratuitous. It closes a real pre-pairing amplification vector, in its
+author's words:
+
+> a Bluetooth BR/EDR peer within radio range, before pairing, can force 168 ECHO_RSP
+> frames from one 681-byte fixed-channel signaling packet containing packed ECHO_REQ
+> commands
+
+Raising the limit, as this repository does, **reopens that vector**. See
+[Caveats](#caveats).
 
 ## Applying the patch
 
@@ -192,9 +202,17 @@ takes.
   Check `dkms status` if they ever stop connecting. A real example: sources cut from
   6.8.0-147 do not build against 6.8.0-146 headers, because they call `secs_to_jiffies()`,
   which that release does not have yet.
-* **This is a workaround, not a fix.** The device violates the spec; the kernel is within
-  its rights. The right upstream outcome is probably to keep processing commands that fit,
-  or to answer Echo Requests regardless, rather than discarding the whole packet.
+* **This reopens an amplification vector.** The check exists because an unpaired peer in
+  radio range could force 168 echo responses out of a single 681-byte signalling packet.
+  Raising the limit restores that exposure. For a laptop the practical risk is low — it
+  takes someone within Bluetooth range deliberately doing it — but it is not zero, and it
+  should be a decision you make knowingly.
+* **This is a workaround, not a fix.** A proper fix has to keep the attack closed. Two
+  differences are worth exploiting: the attack happens *before pairing*, while the FreeBuds
+  frame arrives *after* `Encryption Change`; and the attack packs 168 commands into one
+  packet, while the FreeBuds send exactly one. Bounding commands per packet, or relaxing
+  the limit only on encrypted links, would cover both. That argument has gone to the
+  Bluetooth maintainers.
 
 ## Prebuilt modules
 
