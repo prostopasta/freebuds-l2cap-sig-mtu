@@ -72,4 +72,4 @@ https://github.com/prostopasta/freebuds-l2cap-sig-mtu
 Note for anyone reproducing: `btmon` from bluez 5.72 in noble aborts immediately with
 `*** buffer overflow detected ***`, both to stdout and with `-w`. Traces were captured
 with `tcpdump -i bluetooth-monitor` instead; a decoder is in the repository above. That
-`btmon` crash is arguably a separate bug worth filing.
+`btmon` crash is filed separately as https://github.com/bluez/bluez/issues/2704
