@@ -62,7 +62,7 @@ I am happy to test patches. Captures were taken with tcpdump on
 bluetooth-monitor, because btmon from bluez 5.72 aborts with a buffer overflow
 on this system; full traces, analysis and a reproduction setup are at
 
-  REPO_URL
+  https://github.com/prostopasta/freebuds-l2cap-sig-mtu
 
 Environment: Ubuntu 24.04, 6.8.0-147-generic, BlueZ 5.72, Intel AX201
 (ibt-17-16-1, FW 155-35.23). A JBL TUNE770NC on the same host is unaffected.

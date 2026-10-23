@@ -87,6 +87,6 @@ interop while still being conservative.
 `tcpdump -i bluetooth-monitor` and decoded with a small script. That script, the patch,
 and build instructions for both a one-off module and a DKMS package are here:
 
-REPO_URL
+https://github.com/prostopasta/freebuds-l2cap-sig-mtu
 
 Happy to provide full `bluetoothd -n -d` logs correlated with the captures if that helps.

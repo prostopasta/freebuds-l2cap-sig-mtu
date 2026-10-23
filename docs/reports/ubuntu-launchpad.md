@@ -67,7 +67,7 @@ kernel.
 
 **Analysis, patch and build instructions**
 
-REPO_URL
+https://github.com/prostopasta/freebuds-l2cap-sig-mtu
 
 Note for anyone reproducing: `btmon` from bluez 5.72 in noble aborts immediately with
 `*** buffer overflow detected ***`, both to stdout and with `-w`. Traces were captured
